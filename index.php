@@ -5,11 +5,14 @@ class Movie {
     public string $titolo;
     public int $durata;
     public bool $doppiaggio;
+    public string $prezzo;
+    public array $genere;
 
-    function __construct($_titolo, $_durata, $_doppiaggio) {
+    function __construct($_titolo, $_durata, $_doppiaggio, $_genere) {
         $this->titolo = $_titolo;
         $this->durata = $_durata;
         $this->doppiaggio = $_doppiaggio;
+        $this->genere = $_genere;
     }
 
     function get_price() {
@@ -21,14 +24,31 @@ class Movie {
         }
     }
 
+    function print_genres() {
+        $generi = '';
+        if(isset($this->genere)) {
+            foreach($this->genere as $gen ) {
+                $generi .= $gen . ', ';
+            }
+            $generi = rtrim($generi, ', ');
+            return $generi;
+        } else {
+            return 'NO';
+        }
+    }
+
+
 
 }
 
-$film1 = new Movie('Avatar', 180, false);
-$film2 = new Movie('Avatar La Via dell\'acqua', 190, true);
+$film1 = new Movie('Avatar', 180, false, ['azione', 'avventura']);
+$film2 = new Movie('Avatar La Via dell\'acqua', 190, true, ['azione', 'avventura']);
+$film3 = new Movie('Ciao', 120, false, ['azione', 'dramma', 'commedia', 'ciao']);
 
 $film1->get_price();
 $film2->get_price();
+$film3->get_price();
+
 
 var_dump($film1, $film2)
 
@@ -51,12 +71,21 @@ var_dump($film1, $film2)
         <li> <?php echo $film1->durata; ?> </li>
         <li> <?php echo ($film1->doppiaggio) ? 'Doppiato': 'Lingua Originale' ?> </li>
         <li> <?php echo $film1->prezzo; ?> </li>
+        <li> <?php echo $film1->genere[0] . ', ' . $film1->genere[1]; ?> </li>
     </ul>
     <h3> <?php echo $film2->titolo; ?></h3>
     <ul>
         <li> <?php echo $film2->durata; ?> </li>
         <li> <?php echo ($film2->doppiaggio) ? 'Doppiato': 'Lingua Originale' ?> </li>
         <li> <?php echo $film2->prezzo; ?> </li>
+        <li> <?php echo $film2->print_genres(); ?> </li>
+    </ul>
+    <ul>
+        <li> <?php echo $film3->durata; ?> </li>
+        <li> <?php echo ($film3->doppiaggio) ? 'Doppiato': 'Lingua Originale' ?> </li>
+        <li> <?php echo $film3->prezzo; ?> </li>
+        <li> <?php echo $film3->print_genres(); ?> </li>
+    </ul>
 
 </body>
 </html>
